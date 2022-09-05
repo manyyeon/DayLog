@@ -10,6 +10,10 @@ const FeedList = ({logs}) => {
       renderItem={({item}) => <FeedListItem log={item} />}
       keyExtractor={log => log.id}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
+      onEndReached={distanceFormEnd => {
+        console.log('바닥과 가까워졌어요');
+      }}
+      onEndReachedThreshold={0.85}
     />
   );
 };
