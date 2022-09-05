@@ -6,13 +6,23 @@ import WriteEditor from '../components/WriteEditor';
 import WriteHeader from '../components/WriteHeader';
 import LogContext from '../contexts/LogContext';
 
-const WriteScreen = () => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+const WriteScreen = ({route}) => {
+  const log = route.params?.log;
+
+  const [title, setTitle] = useState(log?.title ?? '');
+  const [body, setBody] = useState(log?.body ?? '');
   const navigation = useNavigation();
 
-  const {onCreate} = useContext(LogContext);
+  const {onCreate, onModify} = useContext(LogContext);
   const onSave = () => {
+    if (log) {
+      onModify({
+        id: log.id,
+        date: log.date,
+        title,
+        body,
+      });
+    }
     onCreate({
       title,
       body,
